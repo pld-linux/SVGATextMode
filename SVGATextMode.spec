@@ -5,8 +5,6 @@ Version:	1.10
 Release:	5
 License:	GPL
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
 Patch0:		%{name}-conf.patch
 Patch1:		%{name}-make.patch
