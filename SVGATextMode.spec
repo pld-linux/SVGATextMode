@@ -6,7 +6,7 @@ Summary(ru):	Утилита для улучшения внешнего вида текстовых консолей
 Summary(uk):	Утил╕та для покращення зовн╕шнього вигляду текстових консолей
 Name:		SVGATextMode
 Version:	1.10
-Release:	8
+Release:	9
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
@@ -16,6 +16,7 @@ Patch2:		%{name}-cache.patch
 Patch3:		%{name}-stmmenu.patch
 Patch4:		%{name}-set80.patch
 Patch5:		%{name}-Makefile-gcc.patch
+Patch6:		%{name}-cfgfile.y.patch
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	util-linux
@@ -89,6 +90,7 @@ SVGATextMode - це утил╕та для перепрограмування апаратури (S)VGA з
 %patch3 -p1
 %patch4 -p0
 %patch5 -p1
+%patch6 -p1
 
 %build
 %{__make} dep CC="%{__cc}"
