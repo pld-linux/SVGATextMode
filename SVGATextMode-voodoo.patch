@@ -1,0 +1,244 @@
+diff -Nur SVGATextMode-1.10.orig/XFREE/Makefile SVGATextMode-1.10/XFREE/Makefile
+--- SVGATextMode-1.10.orig/XFREE/Makefile	Sun Sep  3 00:50:02 2000
++++ SVGATextMode-1.10/XFREE/Makefile	Mon Jul 30 17:05:07 2001
+@@ -21,6 +21,7 @@
+           mga_clock.o \
+           mach64/mach64_mem_access.o mach64/mach64.o \
+           riva128_clock.o \
++          voodoo_clock.o \
+           xfree_compat.o
+ 
+ #          mach64/mach64clockchips.o \
+diff -Nur SVGATextMode-1.10.orig/XFREE/voodoo_clock.c SVGATextMode-1.10/XFREE/voodoo_clock.c
+--- SVGATextMode-1.10.orig/XFREE/voodoo_clock.c	Thu Jan  1 01:00:00 1970
++++ SVGATextMode-1.10/XFREE/voodoo_clock.c	Mon Jul 30 17:04:22 2001
+@@ -0,0 +1,83 @@
++/* Just in case anyone want use it... but I suggest using tdfxfb, it
++   allows using larger clocks. NO CHECKS, NO WARRANTY, BE CAREFUL!!!
++   This piece of code is based on riva128_clock.c, with parts taken
++   from svgalib Voodoo Banshee driver.
++                                 -- Jakub Bogusz <qboosh@pld.org.pl> */
++
++#define STM_XFREE
++#include <stdlib.h>
++#include "messages.h"
++#include "compiler.h"
++#include "include/Xmd.h"
++#include "vgaPCI.h"
++
++#define PCI_VENDOR_ID_3DFX	0x121a
++#define PCI_DEVICE_ID_BANSHEE	0x0003
++#define PCI_DEVICE_ID_VOODOO3	0x0005
++#define PCI_DEVICE_ID_VOODOO4	0x0009
++
++static vgaPCIInformation *vgaPCIInfo;
++
++/* function taken from svgalib (banshee.c) */
++#define REFFREQ 14318.18
++
++static unsigned
++comp_lmn(int freq)
++{
++  int m, n, k, best_m, best_n, best_k, f_cur, best_error;
++
++  best_error=freq;
++  best_n=best_m=best_k=0;
++  for (n=1; n<256; n++) {
++    f_cur=REFFREQ*(n+2);
++    if (f_cur<freq) {
++      f_cur=f_cur/3;
++      if (freq-f_cur<best_error) {
++        best_error=freq-f_cur;
++        best_n=n;
++        best_m=1;
++        best_k=0;
++        continue;
++      }
++    }
++    for (m=1; m<64; m++) {
++      for (k=0; k<4; k++) {
++        f_cur=REFFREQ*(n+2)/(m+2)/(1<<k);
++        if (abs(f_cur-freq)<best_error) {
++          best_error=abs(f_cur-freq);
++          best_n=n;
++          best_m=m;
++          best_k=k;
++	}
++      }
++    }
++  }
++  return (best_n << 8) | (best_m<<2) | best_k;
++}
++/* end of svgalib part */
++
++/* set the clock to given speed (kHz) */
++Bool VoodooClockSelect( int clockspeed )
++{ vgaPCIInformation *vgapciinfo;
++  pciConfigPtr pcr = NULL;
++  int i,pll0;
++  unsigned int io_base;
++
++  vgapciinfo = vgaGetPCIInfo();
++  if (vgapciinfo && vgapciinfo->AllCards)
++    for (i=0;(pcr=vgapciinfo->AllCards[i]);i++)
++      if (pcr->_vendor == PCI_VENDOR_ID_3DFX &&
++	  (pcr->_device == PCI_DEVICE_ID_BANSHEE ||
++	   pcr->_device == PCI_DEVICE_ID_VOODOO3 ||
++	   pcr->_device == PCI_DEVICE_ID_VOODOO4)) 
++	break;
++  if(!pcr) {
++    PERROR(("No Voodoo Banshee/3+ found in PCI info!\n"));
++    return FALSE;
++  }
++  io_base=pcr->_base2 & 0xFFF8;
++  pll0=comp_lmn(clockspeed);
++  PDEBUG(("Voodoo ports base = %08x",io_base));
++  outl(io_base+0x40,pll0);
++  return TRUE;
++}
+diff -Nur SVGATextMode-1.10.orig/XFREE/xfree_compat.h SVGATextMode-1.10/XFREE/xfree_compat.h
+--- SVGATextMode-1.10.orig/XFREE/xfree_compat.h	Thu Jul 20 15:07:11 2000
++++ SVGATextMode-1.10/XFREE/xfree_compat.h	Mon Jul 30 15:23:14 2001
+@@ -110,5 +110,7 @@
+         
+ Bool RIVA128ClockSelect( int clockspeed );
+ 
++Bool VoodooClockSelect( int clockspeed );
++
+ #endif
+ 
+diff -Nur SVGATextMode-1.10.orig/chipset.h SVGATextMode-1.10/chipset.h
+--- SVGATextMode-1.10.orig/chipset.h	Thu Jul 20 15:07:11 2000
++++ SVGATextMode-1.10/chipset.h	Mon Jul 30 15:07:59 2001
+@@ -90,6 +90,7 @@
+ #define CS_MATROX     30
+ #define CS_NEOMAGIC   31
+ #define CS_RIVA128    32
++#define CS_VOODOO     33
+ 
+ #define CLKCHIP_NONE        -1
+ 
+@@ -122,6 +123,7 @@
+ #define CLKCHIP_LAGUNA       25
+ #define CLKCHIP_RIVA128      26
+ #define CLKCHIP_MGAG200      27
++#define CLKCHIP_VOODOO       28
+ 
+ #define OPT_HIBIT_LOW      1<<0
+ #define OPT_HIBIT_HIGH     1<<1
+@@ -199,6 +201,7 @@
+   { "MATROX",    CS_MATROX    },
+   { "NEOMAGIC",  CS_NEOMAGIC  },
+   { "RIVA128",   CS_RIVA128   },
++  { "VOODOO",    CS_VOODOO    },
+   { "",          ENDREC       }
+ };
+ 
+@@ -406,6 +409,12 @@
+     80000
+   },
+ 
++  { CS_VOODOO,
++    1<<CLKCHIP_VOODOO,
++    COMMON_OPTS | OPT_CLOCKDIV2,
++    270000
++  },
++
+   { CS_NONE,   /* CS_NONE signals the end of the chipset structure */
+     0,
+     0,
+@@ -446,6 +455,7 @@
+   { "laguna",     CLKCHIP_LAGUNA     },
+   { "riva128",    CLKCHIP_RIVA128    },
+   { "mgag200",    CLKCHIP_MGAG200    },
++  { "voodoo",     CLKCHIP_VOODOO     },
+   { "",           ENDREC             }
+ };
+ 
+@@ -478,6 +488,7 @@
+   { CLKCHIP_LAGUNA,    14318 , 110000 },
+   { CLKCHIP_RIVA128,   14318 , 110000 },  /* another blunt guess */
+   { CLKCHIP_MGAG200,   27051 , 220000 },
++  { CLKCHIP_VOODOO,    14318 , 270000 },
+   { ENDREC,            0     , 0      }
+ };
+ 
+diff -Nur SVGATextMode-1.10.orig/clockchip.c SVGATextMode-1.10/clockchip.c
+--- SVGATextMode-1.10.orig/clockchip.c	Thu Jul 20 15:07:11 2000
++++ SVGATextMode-1.10/clockchip.c	Mon Jul 30 15:19:00 2001
+@@ -294,6 +294,10 @@
+     case CS_RIVA128:
+       RIVA128ClockSelect(freq);
+       break;
++    case CS_VOODOO:
++      VoodooClockSelect(freq);
++      SET_CLOCKBITS_0_1(3);
++      break;
+     default: PERROR(("Internal error in set_clockchip_clock: chipset #%d does not support any clockchip.\n", chipset));
+   }
+   if (result == FALSE) PWARNING(("ClockChip: error while programming clock chip\n"));
+diff -Nur SVGATextMode-1.10.orig/doc/SVGATextMode.man SVGATextMode-1.10/doc/SVGATextMode.man
+--- SVGATextMode-1.10.orig/doc/SVGATextMode.man	Sat Sep  2 22:06:38 2000
++++ SVGATextMode-1.10/doc/SVGATextMode.man	Mon Jul 30 17:07:52 2001
+@@ -134,6 +134,10 @@
+ .B RIVA128
+ All RIVA128 derivatives (including RIVA128ZX, TNT, and TNT2).
+ 
++.TP
++.B VOODOO
++Voodoo Banshee and Voodoo 3+. WARNING: no checks are done, BE CAREFUL!!!
++
+ .PP
+ SVGATextMode needs a configuration file with a similar syntax as
+ \fBXconfig\fP or \fBXF86Config\fP, the configuration file for XFree86, the
+diff -Nur SVGATextMode-1.10.orig/doc/TextConfig.man SVGATextMode-1.10/doc/TextConfig.man
+--- SVGATextMode-1.10.orig/doc/TextConfig.man	Sat Sep  2 22:06:58 2000
++++ SVGATextMode-1.10/doc/TextConfig.man	Mon Jul 30 17:07:28 2001
+@@ -1019,6 +1019,10 @@
+ .B RIVA128
+ Should work on all RIVA128 derivatives (including ZX and TNT)
+ 
++.TP
++.B VOODOO
++Voodoo Banshee and Voodoo 3+.
++
+ .SH OPTIONS
+ This section contains a list of all allowed special option flags, as entered
+ on an
+diff -Nur SVGATextMode-1.10.orig/setclock.c SVGATextMode-1.10/setclock.c
+--- SVGATextMode-1.10.orig/setclock.c	Thu Oct  8 22:22:56 1998
++++ SVGATextMode-1.10/setclock.c	Mon Jul 30 15:13:02 2001
+@@ -209,6 +209,9 @@
+      case CS_RIVA128:
+ 	RIVA128ClockSelect(freq);
+ 	break;
++     case CS_VOODOO:
++	VoodooClockSelect(freq);
++	break;
+      default: PERROR(("setclock.c: internal error: unknown chip set #%d\n", chipset));
+    }
+ 
+diff -Nur SVGATextMode-1.10.orig/validate.c SVGATextMode-1.10/validate.c
+--- SVGATextMode-1.10.orig/validate.c	Tue Oct 13 21:26:26 1998
++++ SVGATextMode-1.10/validate.c	Mon Jul 30 15:17:39 2001
+@@ -62,6 +62,9 @@
+       case CS_RIVA128:
+         clock_data.clockchiptype = CLKCHIP_RIVA128;
+         break;
++      case CS_VOODOO:
++	clock_data.clockchiptype = CLKCHIP_VOODOO;
++	break;
+     }
+   if ((clock_data.num_clocks==0) && (clock_data.clockchiptype==CLKCHIP_NONE) && (!clock_data.ck_prog_path))
+     PERROR(("No Clocks line, no ClockChip and no ClockProg defined in config file. Make up your mind.\n"));
+diff -Nur SVGATextMode-1.10.orig/vga_prg.c SVGATextMode-1.10/vga_prg.c
+--- SVGATextMode-1.10.orig/vga_prg.c	Sun Sep  3 00:01:59 2000
++++ SVGATextMode-1.10/vga_prg.c	Mon Jul 30 15:12:28 2001
+@@ -134,6 +134,7 @@
+        break;
+     case CS_MATROX:
+     case CS_RIVA128:
++    case CS_VOODOO:
+        get_IO_range(0x400, 1); /* dummy: will give us access to all IO addresses >= 0x400 */
+        break;
+     case CS_ATIMACH64:
