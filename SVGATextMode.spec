@@ -2,7 +2,7 @@ Summary:	A utility for improving the appearance of terminals
 Summary(pl):	Narzêdzie do polepszania wygl±du terminali
 Name:		SVGATextMode
 Version:	1.10
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
