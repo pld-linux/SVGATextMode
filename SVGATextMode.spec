@@ -39,8 +39,8 @@ wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wierzania itp.
 %patch2 -p1 -b .make
 
 %build
-make dep
-make all
+%{__make} dep
+%{__make} all
 
 %install
 rm -rf $RPM_BUILD_ROOT
