@@ -13,6 +13,7 @@ Patch3:		%{name}-stmmenu.patch
 Patch4:		%{name}-set80.patch
 BuildRequires:	bison
 BuildRequires:	flex
+BuildRequires:	util-linux
 Requires:	dialog
 Requires:	kbd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
