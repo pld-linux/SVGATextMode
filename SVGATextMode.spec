@@ -10,7 +10,7 @@ Patch0:		SVGATextMode-src-conf.patch
 Patch1:		SVGATextMode-src-agp.patch
 Patch2:		SVGATextMode-src-make.patch
 Prereq:		/sbin/chkconfig
-BuildRoot:	/tmp/%{name}-%{version}-buildroot
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86} alpha
 
 %description
