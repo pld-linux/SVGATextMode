@@ -1,0 +1,26 @@
+diff -urN SVGATextMode-1.10.orig/probeclocks.c SVGATextMode-1.10/probeclocks.c
+--- SVGATextMode-1.10.orig/probeclocks.c	1998-09-05 16:16:32.000000000 +0200
++++ SVGATextMode-1.10/probeclocks.c	2003-06-25 15:48:09.000000000 +0200
+@@ -54,14 +54,14 @@
+ 
+ void usage()
+ {
+-     PMESSAGE(("version %s. (c) 1995,1996,1997 Koen Gadeyne.\n Usage: %s [options]\n\n\
+-     Options: -n  Don't program VGA hardware (rather useless)\n\
+-              -d  print debugging information\n\
+-              -h  print usage information\n\
+-              -f  fast mode: probe only one clock `precisely', and the rest faster
+-                  and less accurate (XFree86 method for all but the first probe)
+-              -t <ConfigFile>  Use alternative config file instead of the default\n\
+-                 (= %s if that exists, or %s otherwise)\n\n",
++     PMESSAGE(("version %s. (c) 1995,1996,1997 Koen Gadeyne.\n Usage: %s [options]\n\n"
++"     Options: -n  Don't program VGA hardware (rather useless)\n"
++"              -d  print debugging information\n"
++"              -h  print usage information\n"
++"              -f  fast mode: probe only one clock `precisely', and the rest faster\n"
++"                  and less accurate (XFree86 method for all but the first probe)\n"
++"              -t <ConfigFile>  Use alternative config file instead of the default\n"
++"                 (= %s if that exists, or %s otherwise)\n\n",
+      VERSION, CommandName, CLOCK_CONF_FILE, CONFIGFILE));
+ }
+ 
