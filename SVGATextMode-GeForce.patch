@@ -1,21 +1,23 @@
 diff -urN SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/riva128_clock.c
 --- SVGATextMode-1.10.orig/XFREE/riva128_clock.c	Tue Jul 18 04:47:15 2000
 +++ SVGATextMode-1.10/XFREE/riva128_clock.c	Fri Jul  5 00:47:11 2002
-@@ -83,6 +83,8 @@
+@@ -83,6 +83,9 @@
  #define PCI_DEVICE_ID_NVIDIA_VTNT2     0x002C
  #define PCI_DEVICE_ID_NVIDIA_UVTNT2    0x002D
  #define PCI_DEVICE_ID_NVIDIA_ITNT2     0x00A0
++#define PCI_DEVICE_ID_NVIDIA_GF256DDR	0x0101
 +#define PCI_DEVICE_ID_NVIDIA_GF2MX400  0x0110
 +#define PCI_DEVICE_ID_NVIDIA_GF2MX200  0x0111
  
  vgaPCIInformation *vgaPCIInfo;
  
-@@ -205,7 +207,9 @@
+@@ -205,7 +207,10 @@
                                 pcr->_device == PCI_DEVICE_ID_NVIDIA_UTNT2 ||
                                 pcr->_device == PCI_DEVICE_ID_NVIDIA_VTNT2 ||
                                 pcr->_device == PCI_DEVICE_ID_NVIDIA_UVTNT2 ||
 -                               pcr->_device == PCI_DEVICE_ID_NVIDIA_ITNT2)
 +                               pcr->_device == PCI_DEVICE_ID_NVIDIA_ITNT2 ||
++				pcr->_device == PCI_DEVICE_ID_NVIDIA_GF256DDR ||
 +                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GF2MX400 ||
 +                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GF2MX200)
                         {
