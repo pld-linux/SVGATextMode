@@ -1,0 +1,248 @@
+diff -urN SVGATextMode-1.9-src.orig/Makefile SVGATextMode-1.9-src/Makefile
+--- SVGATextMode-1.9-src.orig/Makefile	Wed Jul 28 22:14:53 1999
++++ SVGATextMode-1.9-src/Makefile	Wed Jul 28 22:31:20 1999
+@@ -41,14 +41,14 @@
+ export CFLAGS
+ 
+ # installation path for SVGATextMode
+-INSTBINDIR = /usr/sbin
++INSTBINDIR = $(DESTDIR)/usr/sbin
+ 
+ # installation path for TextConfig. This is also the path that will be
+ # compiled into SVGATextMode.
+-INSTCONFDIR = /etc
++INSTCONFDIR = $(DESTDIR)/etc
+ 
+ # installation path for the manual files
+-INSTMANDIR = /usr/man
++INSTMANDIR = $(DESTDIR)/usr/share/man
+ 
+ # misc configuration flags.
+ #
+@@ -82,7 +82,7 @@
+ #                          to use 64kb of VGA memory instead of 32k.
+ #
+ 
+-CONF_FLAGS = 
++CONF_FLAGS = -DRUN_SECURE
+ 
+ ############  END  OF  USER  CONFIGURATION  #################################
+ 
+@@ -107,8 +107,8 @@
+ XFREELIBS = XFREE/libxf86_hw.a
+ XFREELINK = -LXFREE -lxf86_hw
+ 
+-USERPROGS = SVGATextMode stm clockprobe grabmode
+-HACKPROGS = setVGAreg getVGAreg setpalette getpalette set80 ClockProg 
++USERPROGS = SVGATextMode stm grabmode
++HACKPROGS = setVGAreg setpalette set80 ClockProg 
+ 
+ BINARIES = $(USERPROGS) $(HACKPROGS)
+ 
+@@ -255,16 +255,12 @@
+ #
+ 
+ bininstall:
+-	@if [ ! -x SVGATextMode ]; then \
+-		make SVGATextMode; \
+-	fi
+-	@if [ ! -x grabmode ]; then \
+-		make grabmode; \
+-	fi
++	install -s -m 755 $(USERPROGS) $(HACKPROGS) $(INSTBINDIR)
+ 	install -m 755 SVGATextMode $(INSTBINDIR)
+ 	ln -sf SVGATextMode $(INSTBINDIR)/stm
+-	install -m 755 grabmode $(INSTBINDIR)
+ 	ln -sf grabmode $(INSTBINDIR)/clockprobe
++	ln -sf setVGAreg $(INSTBINDIR)/getVGAreg
++	ln -sf setpalette $(INSTBINDIR)/getpalette
+ 	
+ man-install maninstall:
+ 	rm -f $(INSTMANDIR)/man8/SVGATextMode.8.gz
+diff -urN SVGATextMode-1.9-src.orig/TextConfig SVGATextMode-1.9-src/TextConfig
+--- SVGATextMode-1.9-src.orig/TextConfig	Wed Jul 28 22:14:53 1999
++++ SVGATextMode-1.9-src/TextConfig	Wed Jul 28 22:26:10 1999
+@@ -333,7 +333,7 @@
+ # cards, and is useless on cards with a programmable clock chip.
+ # Cirrus cards seem not to like this feature!
+ #
+-Option "ClockDiv2"
++#Option "ClockDiv2"
+ 
+ #############################################################################
+ #
+@@ -401,12 +401,15 @@
+ # It will be called with TWO arguments: the H and V size of the new text 
+ # mode. Example: SVGATextMode 100x37 will call
+ #
+-#      /etc/STM_reset 100 37
++#      /usr/sbin/STM_reset 100 37
+ # Your reset program NEED not use those two arguments, but it could be useful
+ # for some applications. 
+ #
++# Debian package includes STM_reset script set up properly for use with gpm.
++# You should not change the line below unless you have your own reset script
++# in another location.
+ 
+-#ResetProg "/etc/STM_reset"
++ResetProg "/usr/sbin/STM_reset"
+ 
+ 
+ #############################################################################
+diff -urN SVGATextMode-1.9-src.orig/contrib/STM_utilities.8 SVGATextMode-1.9-src/contrib/STM_utilities.8
+--- SVGATextMode-1.9-src.orig/contrib/STM_utilities.8	Thu Jan  1 01:00:00 1970
++++ SVGATextMode-1.9-src/contrib/STM_utilities.8	Wed Jul 28 22:26:10 1999
+@@ -0,0 +1,25 @@
++.TH STM_utilities 81 "10 April 1999" "Debian GNU/Linux" "SVGATextMode Utilities"
++.\" Copyright (c) 1999  Ron Lee.  All rights reserved.
++.\" This text may be distributed under the terms of the GPL.
++.\"
++.SH NAME
++STM_utilities \- helper programs supplied with SVGATextMode
++.SH SYNOPSIS
++.B STM_reset
++.br
++.B ClockProg
++.br
++.B getVGAreg
++.br
++.B getpalette
++.br
++.B setVGAreg
++.br
++.B setpalette
++.br
++.B set80
++.SH "DESCRIPTION"
++These utilities currently do not have manual pages.
++.PP
++see \fI/usr/doc/svgatextmode\fP for details about their use.
++
+diff -urN SVGATextMode-1.9-src.orig/contrib/scripts/STM_reset SVGATextMode-1.9-src/contrib/scripts/STM_reset
+--- SVGATextMode-1.9-src.orig/contrib/scripts/STM_reset	Wed Jul 28 22:14:53 1999
++++ SVGATextMode-1.9-src/contrib/scripts/STM_reset	Wed Jul 28 22:26:10 1999
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/bin/sh
+ #
+ # This scripts is called from the "resetprog" line in TextConfig,
+ # when SVGATextMode has finished switching modes.
+@@ -13,10 +13,19 @@
+ # on some kernel versions (according to Mr Rubini).
+ #
+ 
++# *** old gpm pid file.. kept for backward compatibility ***
+ if [ -f /var/run/gpmpid ]
+ then
+         echo "Screen resized to $1x$2. Restarting GPM..."
+-        kill -WINCH `cat /var/run/gpmpid     # gets pid from current gpm daemon, and send resize signal to it
++        kill -WINCH `cat /var/run/gpmpid`     # gets pid from current gpm daemon, and send resize signal to it
++fi
++
++# *** modified by Ron Lee ***
++# *** to do the same for the new one ***
++if [ -f /var/run/gpm.pid ]
++then
++	echo "Screen resized to $1x$2. Restarting GPM..."
++	kill -WINCH `cat /var/run/gpm.pid`     # gets pid from current gpm daemon, and send resize signal to it
+ fi
+ 
+ #
+diff -urN SVGATextMode-1.9-src.orig/contrib/scripts/gettextregs SVGATextMode-1.9-src/contrib/scripts/gettextregs
+--- SVGATextMode-1.9-src.orig/contrib/scripts/gettextregs	Wed Jul 28 22:14:53 1999
++++ SVGATextMode-1.9-src/contrib/scripts/gettextregs	Wed Jul 28 22:26:10 1999
+@@ -7,7 +7,8 @@
+ # current mode. It does about the same as "textmode" from svgalib
+ #
+ 
+-BINDIR=.
++#BINDIR=.
++BINDIR=/usr/sbin
+ 
+ $BINDIR/getVGAreg -x CRTC 0
+ $BINDIR/getVGAreg -x CRTC 1
+diff -urN SVGATextMode-1.9-src.orig/debian/README.tips SVGATextMode-1.9-src/debian/README.tips
+--- SVGATextMode-1.9-src.orig/debian/README.tips	Thu Jan  1 01:00:00 1970
++++ SVGATextMode-1.9-src/debian/README.tips	Wed Jul 28 22:26:10 1999
+@@ -0,0 +1,81 @@
++Various notes on svgatextmode for Debian
++-----------------------
++
++If you experience problems after upgrading to SVGATextMode-1.9, it may be
++because some of the modes in your old TextConfig have been invalidated by
++new upstream mode checking.  Mode lines with Vertical Totals > 1023 are
++subject to this.  It is recommended that you install the TextConfig file
++that came with this package and reapply any custom changes to that.
++
++It is possible that the offending lines will be taken care of by the
++install scripts in a later release ...
++( submissions to this end are welcome ;)
++
++============================================================================
++
++SVGATextMode is now started from /etc/init.d/svgatextmode instead of from 
++rc.boot.  This allows it to set default font even if the fonts are located on
++a partition that is not mounted early in the boot process.
++
++10/4/99 - it is now started from rcS.d/S40... which should be after the mount
++	  process.
++
++============================================================================
++
++If you need more resolution, or want to load a different font, then please
++customize /etc/TextConfig according to what kind of video card you have.
++
++/etc/svgamode file is no longer needed, because you can set the default mode
++in the /etc/TextConfig file.
++
++You can restore the screen to 80x25 mode with 
++
++stm 80x25
++
++at all times.
++
++(Does not work with some high level video boards that do have
++some problems with the low refresh rates when in native mode!)
++
++============================================================================
++
++If you have installed kbd >=0.92-3, and did not replace TextConfig conffile on
++upgrade, you will need to edit it, and change FontPath to
++/usr/share/consolefonts .
++
++============================================================================
++
++If your card is buggy, and you get a lot of garbage on your screen after
++reboot, add the following line to your /etc/init.d/reboot
++test -x /sbin/stm -a -f /etc/svgamode && stm 80x25 || true
++This will reset your video card on reboot.
++
++===========================================================================
++
++For some PCI cards, notably Matrox Millenium, it is in some cases 
++necessary to type 'cat /proc/pci' before using stm.  If your card 
++requires it, you need to add this line to /etc/init.d/svgatextmode, 
++under 'start)' :
++
++cat /proc/pci &>/dev/null 
++
++==========================================================================
++
++If you are having problems with keeping gpm happy after screen resize, make sure
++your /usr/sbin/STM_reset has the following command in it:
++
++if [ -f /var/run/gpm.pid ]
++then
++	echo "Screen resized to $1x$2. Restarting GPM..."
++	kill -WINCH `cat /var/run/gpm.pid`     # gets pid from current gpm daemon
++                , and send resize signal to it
++fi
++
++Also make sure you have the following uncommented in /etc/TextConfig:
++
++ResetProg "/usr/sbin/STM_reset"
++==========================================================================
++
++Igor Grobman, <igor@debian.org>
++
++updated by Ron Lee <ron@debian.org>, Fri,  9 Apr 1999 21:15:51 +0930

@@ -1,0 +1,56 @@
+diff -urN SVGATextMode-1.9-src.orig.orig/TextConfig SVGATextMode-1.9-src.orig/TextConfig
+--- SVGATextMode-1.9-src.orig.orig/TextConfig	Wed Jul 28 22:42:18 1999
++++ SVGATextMode-1.9-src.orig/TextConfig	Wed Jul 28 22:44:55 1999
+@@ -448,13 +448,13 @@
+ #
+ 
+ Option "LoadFont"
+-FontProg "/usr/bin/setfont"
+-#FontPath "/usr/lib/kbd/consolefonts"
+-FontSelect "Cyr_a8x16"   8x16 9x16 8x15 9x15 
+-FontSelect "Cyr_a8x14"   8x14 9x14 8x13 9x13
+-FontSelect "8x12alt.psf" 8x12 9x12 8x11 9x11
+-FontSelect "Cyr_a8x8"    8x8  9x8  8x7  9x7
+-FontSelect "Cyr_a8x32"   8x32 9x32 8x31 9x31
++FontProg "/usr/bin/consolechars -f"
++FontPath "/usr/share/consolefonts"
++FontSelect "iso2graf-16" 8x16 9x16 8x15 9x15
++FontSelect "iso2graf-16" 8x14 9x14 8x13 9x13
++FontSelect "iso2graf-16" 8x12 9x12 8x11 9x11
++FontSelect "iso2graf-16" 8x10 9x10 8x9  9x9
++FontSelect "iso2graf-16" 8x8  9x8  8x7  9x7
+ 
+ #
+ # using the following FontProg line will avoid losing high-ascii characters
+@@ -842,7 +842,7 @@
+ #
+ "H100x30"          75   800  832  936 1008    480 500  508  532  font  8x16 DoubleScan
+ "H80x30"           65   640  672  744  776    480 500  508  532  font  9x16 DoubleScan
+-"H80x60"           65   640  672  744  776    960 1000 1016 1023 font  9x16
++#"H80x60"           65   640  672  744  776    960 1000 1016 1023 font  9x16
+ 
+ 
+ ###############################################################################
+@@ -925,8 +925,8 @@
+ #
+ # Be carefull with these! They use EXTREMELY high clocks (for text mode)
+ # Delman Lee (delman@mipg.upenn.edu)
+-"160x60"          110  1280 1304 1480 1696    960  986  989 1023 font  8x16
+-"160x30"          110  1280 1304 1480 1696    960  986  989 1023 font  8x32
++#"160x60"          110  1280 1304 1480 1696    960  986  989 1023 font  8x16
++#"160x30"          110  1280 1304 1480 1696    960  986  989 1023 font  8x32
+ "108x60"           80   864  964 1104 1256    960  986  989 1023 font  8x16
+ #
+ # Some 120Hz / 82 KHz modes
+@@ -1006,9 +1006,9 @@
+ #
+ # Some more fantasy modes. All are 56 kHz Hsync frequency modes
+ #
+-"B160x60"         94.5  1280 1348 1432 1680    960  986  989 1023  font 8x16
++#"B160x60"         94.5  1280 1348 1432 1680    960  986  989 1023  font 8x16
+ "B160x48"         94.5  1280 1348 1432 1680    768  770  774  800  font 8x16
+-"B160x30"         94.5  1280 1348 1432 1680    960  986  989 1023  font 8x32
++#"B160x30"         94.5  1280 1348 1432 1680    960  986  989 1023  font 8x32
+ "B160x100"        94.5  1280 1352 1472 1680    800  809  819  850  font 8x8
+ 
+ 
