@@ -1,7 +1,7 @@
 Summary:	A utility for improving the appearance of text consoles.
 Name:		SVGATextMode
 Version:	1.9
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		Applications/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz 
