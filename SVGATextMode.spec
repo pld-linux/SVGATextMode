@@ -1,7 +1,7 @@
 Summary:	A utility for improving the appearance of text consoles.
 Name:		SVGATextMode
 Version:	1.10
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -11,6 +11,7 @@ Patch0:		%{name}-conf.patch
 Patch1:		%{name}-make.patch
 Patch2:		%{name}-cache.patch
 Patch3:		%{name}-stmmenu.patch
+Patch4:		%{name}-set80.patch
 BuildRequires:	bison
 Requires:	console-tools
 Requires:	dialog
@@ -57,7 +58,7 @@ install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
 rm -f $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
 echo ".so SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
 
-gzip -9nf doc/* README README.FIRST CREDITS COPYING HISTORY TODO
+gzip -9nf doc/* README README.FIRST CREDITS HISTORY TODO
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
