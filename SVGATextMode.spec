@@ -1,15 +1,16 @@
 Summary:	A utility for improving the appearance of text consoles.
 Name:		SVGATextMode
-Version:	1.9
-Release:	2
+Version:	1.10
+Release:	1
 License:	GPL
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
 Source1:	%{name}.init
-Patch0:		SVGATextMode-src-conf.patch
-Patch1:		SVGATextMode-src-agp.patch
-Patch2:		SVGATextMode-src-make.patch
+Patch0:		%{name}-conf.patch
+Patch1:		%{name}-make.patch
+Patch2:		%{name}-cache.patch
 BuildRequires:	bison
 Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -30,13 +31,13 @@ results will depend on your VGA card.
 SVGATextMode jest narzêdziem s³u¿±cym konfiguracji sprzêtu (S)VGA,
 które pozwala na polepszenie wygl±du konsoli tekstowej. To narzêdzie
 wykorzystuje plik konfiguracyjny by ustawiaæ wy¿sze rozdzielczo¶ci,
-wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wierzania itp.
+wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wie¿ania itp.
 
 %prep
-%setup -q -n %{name}-%{version}-src
-%patch0 -p1 -b .conf
-%patch1 -p1 -b .agp
-%patch2 -p1 -b .make
+%setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %{__make} dep
@@ -49,15 +50,15 @@ install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 install -d $RPM_BUILD_ROOT%{_sbindir}
 install -d $RPM_BUILD_ROOT%{_mandir}/man{5,8}
 
-make	DESTDIR=$RPM_BUILD_ROOT newinstall man-install
-install -m 0755 STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
-install	%{SOURCE1}	$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+%{__make} DESTDIR=$RPM_BUILD_ROOT newinstall man-install
+install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
 
-rm	   $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
+install	%{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+
 echo ".so SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
-strip	   $RPM_BUILD_ROOT%{_sbindir}/* || :
-gzip -9nf  $RPM_BUILD_ROOT%{_mandir}/man*/* doc/* README
-gzip -9nf  README.FIRST CREDITS COPYING HISTORY TODO
+
+gzip -9nf doc/* README \
+	README.FIRST CREDITS COPYING HISTORY TODO
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
@@ -74,7 +75,7 @@ fi
 %defattr(644,root,root,755)
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/TextConfig
 %doc {README,README.FIRST,CREDITS,COPYING,HISTORY,TODO}.gz
-%doc doc/*
+%doc doc/*.gz
 %attr(755,root,root) %{_sbindir}/*
 %attr(644,root,root) %{_mandir}/man*/*
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
