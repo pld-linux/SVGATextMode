@@ -1,5 +1,6 @@
---- SVGATextMode-1.10/SVGATextMode.c~	2000-09-02 23:27:19.000000000 +0000
-+++ SVGATextMode-1.10/SVGATextMode.c	2004-04-16 21:10:39.000000000 +0000
+diff -ru SVGATextMode-1.10.orig/SVGATextMode.c SVGATextMode-1.10/SVGATextMode.c
+--- SVGATextMode-1.10.orig/SVGATextMode.c	2000-09-03 01:27:19.000000000 +0200
++++ SVGATextMode-1.10/SVGATextMode.c	2004-05-25 18:50:33.888690176 +0200
 @@ -35,7 +35,7 @@
  #include <fcntl.h>
  
@@ -9,3 +10,23 @@
  #  include <sys/ioctl.h>
  #  include <sys/kd.h>
  #  include <ctype.h>
+diff -ru SVGATextMode-1.10.orig/vga_prg.h SVGATextMode-1.10/vga_prg.h
+--- SVGATextMode-1.10.orig/vga_prg.h	2000-09-03 00:03:07.000000000 +0200
++++ SVGATextMode-1.10/vga_prg.h	2004-05-25 18:55:36.558677344 +0200
+@@ -40,14 +40,10 @@
+ #  define ioperm(x,y,z) (0)
+ #  define iopl(x) (0)
+ #else
+-extern int iopl(int);
+-#  include <asm/io.h>
+-#  ifdef __ALPHA_IO_H
+-#    define _ASM_IO_H
+-#  endif
++#  include <sys/io.h>
+ #endif
+ 
+-#ifndef _ASM_IO_H
++#ifndef _SYS_IO_H
+ #  ifdef DJGPP
+ #    include <pc.h>
+ #    define outb(data,port) outportb(port,data)
