@@ -1,25 +1,85 @@
-diff -urN SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/riva128_clock.c
+diff -ru SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/riva128_clock.c
 --- SVGATextMode-1.10.orig/XFREE/riva128_clock.c	Tue Jul 18 04:47:15 2000
-+++ SVGATextMode-1.10/XFREE/riva128_clock.c	Fri Jul  5 00:47:11 2002
-@@ -83,6 +83,9 @@
++++ SVGATextMode-1.10/XFREE/riva128_clock.c	Tue Oct 30 03:39:11 2001
+@@ -83,6 +83,13 @@
  #define PCI_DEVICE_ID_NVIDIA_VTNT2     0x002C
  #define PCI_DEVICE_ID_NVIDIA_UVTNT2    0x002D
  #define PCI_DEVICE_ID_NVIDIA_ITNT2     0x00A0
-+#define PCI_DEVICE_ID_NVIDIA_GF256DDR	0x0101
-+#define PCI_DEVICE_ID_NVIDIA_GF2MX400  0x0110
-+#define PCI_DEVICE_ID_NVIDIA_GF2MX200  0x0111
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE_SDR        0x0100
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE_DDR        0x0101
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE2_MX400     0x0110
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE2_MX200     0x0111
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE2_GTS       0x0150
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE2_GTS2      0x0151
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE2_ULTRA     0x0152
  
  vgaPCIInformation *vgaPCIInfo;
  
-@@ -205,7 +207,10 @@
+@@ -92,14 +99,15 @@
+ #define PRAMDAC_PLL_COEFF  0x00000508
+ #define PRAMDAC_PLL_COEFF_SELECT   0x0000050C
+ 
++#define PEXTDEV_BASE	0x00101000
++
+ #define NV3_MIN_CLOCK_IN_KHZ  25000    // Not sure about this, but it seems reasonable
+ #define NV3_MAX_CLOCK_IN_KHZ 230000
+ #define NV4_MAX_CLOCK_IN_KHZ 350000
+ 
+ static int max_clock, is_nv3, pll_coeff;
+ 
+-/* NTSC cards have approx 14.3Mhz. Need to detect, but leave for now*/
+-#define PLL_INPUT_FREQ 13500 
++static int PLL_INPUT_FREQ;
+ #define M_MIN 7
+ #define M_MAX 13
+ 
+@@ -176,7 +184,7 @@
+ // Set the clock to the given speed (in KHz)
+ Bool RIVA128ClockSelect( int clockspeed )
+ {
+-  int *ptr;
++  int *ptr, *ptr2;
+ 
+   int out;
+   int m, n, p, value;
+@@ -205,7 +213,14 @@
                                 pcr->_device == PCI_DEVICE_ID_NVIDIA_UTNT2 ||
                                 pcr->_device == PCI_DEVICE_ID_NVIDIA_VTNT2 ||
                                 pcr->_device == PCI_DEVICE_ID_NVIDIA_UVTNT2 ||
 -                               pcr->_device == PCI_DEVICE_ID_NVIDIA_ITNT2)
 +                               pcr->_device == PCI_DEVICE_ID_NVIDIA_ITNT2 ||
-+				pcr->_device == PCI_DEVICE_ID_NVIDIA_GF256DDR ||
-+                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GF2MX400 ||
-+                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GF2MX200)
++                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE_SDR ||
++                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE_DDR ||
++                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_MX400 ||
++                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_MX200 ||
++                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_GTS ||
++                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_GTS2 ||
++                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_ULTRA)
                         {
                                 is_nv3 = 0;
                                 pll_coeff = 0x00010700;
+@@ -248,6 +263,24 @@
+     PERROR(( "Error mmap'ing /dev/mem" ));
+     return FALSE;
+   }
++
++  ptr2 = (int*)mmap(0, 0x1000,PROT_READ|PROT_WRITE,MAP_SHARED, fd, (off_t)(pcr->_base0) + PEXTDEV_BASE);
++
++  if( ptr2 == (int*)-1 )
++  {
++    PERROR(( "Error mmap'ing /dev/mem" ));
++    return FALSE;
++  }
++
++  if(is_nv3)
++  {
++    PLL_INPUT_FREQ = (ptr2[0x00000000/4]&0x20) ? 13500 : 14318;
++  }
++  else
++  {
++    PLL_INPUT_FREQ = (ptr2[0x00000000/4]&0x40) ? 14318 : 13500;
++  }
++  munmap(ptr2, 0x1000);
+     
+   close( fd );
+ #else
