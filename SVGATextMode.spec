@@ -109,14 +109,12 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man8/{stm,clockprobe}.8
 echo ".so SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
 echo ".so grabmode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/clockprobe.8
 
-gzip -9nf doc/* README README.FIRST CREDITS HISTORY TODO
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz doc/*.gz
+%doc doc/* README README.FIRST CREDITS HISTORY TODO
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/TextConfig
 %attr(755,root,root) %{_sbindir}/*
 %attr(644,root,root) %{_mandir}/man*/*
