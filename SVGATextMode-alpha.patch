@@ -1,9 +1,9 @@
 --- SVGATextMode-1.10/XFREE/Makefile.orig	Sun Sep  3 00:50:02 2000
 +++ SVGATextMode-1.10/XFREE/Makefile	Fri Aug 16 10:28:42 2002
-@@ -21,11 +21,11 @@
-           mga_clock.o \
+@@ -22,11 +22,11 @@
            mach64/mach64_mem_access.o mach64/mach64.o \
            riva128_clock.o \
+           voodoo_clock.o \
 -          xfree_compat.o
 +          xfree_compat.o \
 +	  common_hw/IODelay.o
