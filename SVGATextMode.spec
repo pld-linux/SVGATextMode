@@ -49,7 +49,7 @@ wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wie¿ania itp.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,8}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}%{_sbindir},%{_mandir}/man{5,8}}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT newinstall man-install
 install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
