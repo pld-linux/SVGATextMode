@@ -1,7 +1,8 @@
-Summary:	A utility for improving the appearance of text consoles.
+Summary:	A utility for improving the appearance of terminals
+Summary(pl):	Narzêdzie do polepszania wygl±du terminali
 Name:		SVGATextMode
 Version:	1.10
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -12,30 +13,28 @@ Patch1:		%{name}-make.patch
 Patch2:		%{name}-cache.patch
 Patch3:		%{name}-stmmenu.patch
 Patch4:		%{name}-set80.patch
-BuildRequires:	flex
 BuildRequires:	bison
-Requires:	console-tools
-Requires:	console-data
+BuildRequires:	flex
 Requires:	dialog
+Requires:	kbd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86} alpha
 
 %description
 SVGATextMode is a utility for reprogramming (S)VGA hardware, which can
-improve the appearance of text consoles. You should install
-SVGATextMode if you want to alter the appearance of your text
-consoles. The utility uses a configuration file (Xconfig or
-XF86Config) to set up textmodes with higher resolution, larger fonts,
-higher display refresh rates, etc.
+improve the appearance of terminals. You should install SVGATextMode
+if you want to alter the appearance of your terminal. The utility uses
+a configuration file (Xconfig or XF86Config) to set up textmodes with
+higher resolution, larger fonts, higher display refresh rates, etc.
 
 Although SVGATextMode can be used to program any text mode size, your
 results will depend on your VGA card.
 
 %description -l pl
-SVGATextMode jest narzêdziem s³u¿±cym konfiguracji sprzêtu (S)VGA,
-które pozwala na polepszenie wygl±du konsoli tekstowej. To narzêdzie
-wykorzystuje plik konfiguracyjny by ustawiaæ wy¿sze rozdzielczo¶ci,
-wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wie¿ania itp.
+SVGATextMode jest narzêdziem s³u¿±cym do konfiguracji sprzêtu (S)VGA,
+które pozwala na polepszenie wygl±du terminali. Wykorzystuje plik
+konfiguracyjny (Xconfig lub XF86Config) aby ustawiaæ wy¿sze
+rozdzielczo¶ci, wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wie¿ania itp.
 
 %prep
 %setup -q
@@ -62,7 +61,7 @@ echo ".so man8/grabmode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/clockprobe.8
 
 gzip -9nf doc/* README README.FIRST CREDITS HISTORY TODO
 
-%clean 
+%clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
