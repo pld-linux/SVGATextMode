@@ -2,9 +2,10 @@ Summary:	A utility for improving the appearance of text consoles.
 Name:		SVGATextMode
 Version:	1.9
 Release:	2
-Copyright:	GPL
-Group:		Applications/System
-Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz 
+License:	GPL
+Group:		Utilities/System
+Group(pl):	Narzêdzia/System
+Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
 Source1:	%{name}.init
 Patch0:		SVGATextMode-src-conf.patch
 Patch1:		SVGATextMode-src-agp.patch
@@ -15,23 +16,21 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86} alpha
 
 %description
-SVGATextMode is a utility for reprogramming (S)VGA hardware,
-which can improve the appearance of text consoles.
-You should install SVGATextMode if you want to alter the
-appearance of your text consoles. The utility uses a 
-configuration file (Xconfig or XF86Config) to set up 
-textmodes with higher resolution, larger fonts, higher 
-display refresh rates, etc.
+SVGATextMode is a utility for reprogramming (S)VGA hardware, which can
+improve the appearance of text consoles. You should install
+SVGATextMode if you want to alter the appearance of your text
+consoles. The utility uses a configuration file (Xconfig or
+XF86Config) to set up textmodes with higher resolution, larger fonts,
+higher display refresh rates, etc.
 
-Although SVGATextMode can be used to program any text
-mode size, your results will depend on your VGA card.
+Although SVGATextMode can be used to program any text mode size, your
+results will depend on your VGA card.
 
 %description -l pl
-SVGATextMode jest narzêdziem s³u¿±cym konfiguracji sprzêtu
-(S)VGA, które pozwala na polepszenie wygl±du konsoli tekstowej.
-To narzêdzie wykorzystuje plik konfiguracyjny by ustawiaæ
-wy¿sze rozdzielczo¶ci, wiêksze fonty, wy¿sze czêstotliwo¶ci
-od¶wierzania itp.
+SVGATextMode jest narzêdziem s³u¿±cym konfiguracji sprzêtu (S)VGA,
+które pozwala na polepszenie wygl±du konsoli tekstowej. To narzêdzie
+wykorzystuje plik konfiguracyjny by ustawiaæ wy¿sze rozdzielczo¶ci,
+wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wierzania itp.
 
 %prep
 %setup -q -n %{name}-%{version}-src
@@ -73,7 +72,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not size mtime md5) /etc/TextConfig
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/TextConfig
 %doc {README,README.FIRST,CREDITS,COPYING,HISTORY,TODO}.gz
 %doc doc/*
 %attr(755,root,root) %{_sbindir}/*
