@@ -1,0 +1,3 @@
+- updated to 1.10
+- adapterized
+- removed "strip" and "gzip %%{_mandir}/*/*"
