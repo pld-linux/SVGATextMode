@@ -100,7 +100,6 @@ SVGATextMode - це утил╕та для перепрограмування апаратури (S)VGA з
 %patch8 -p1
 %ifarch alpha
 %patch9 -p1
-ln -sf ../../asm XFREE/include
 %endif
 %patch10 -p1
 
