@@ -13,7 +13,7 @@ Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.ta
 # Source0-md5:	d94c6cd073295fc181d0865c039eb13e
 Patch0:		%{name}-conf.patch
 Patch1:		%{name}-make.patch
-Patch2:		%{name}-cache.patch
+Patch2:		%{name}-llh.patch
 Patch3:		%{name}-stmmenu.patch
 Patch4:		%{name}-set80.patch
 Patch5:		%{name}-Makefile-gcc.patch

@@ -1,0 +1,11 @@
+--- SVGATextMode-1.10/SVGATextMode.c~	2000-09-02 23:27:19.000000000 +0000
++++ SVGATextMode-1.10/SVGATextMode.c	2004-04-16 21:10:39.000000000 +0000
+@@ -35,7 +35,7 @@
+ #include <fcntl.h>
+ 
+ #ifndef DOS
+-#  include "fs.h"
++#  include <linux/fs.h>
+ #  include <sys/ioctl.h>
+ #  include <sys/kd.h>
+ #  include <ctype.h>
