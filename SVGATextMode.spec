@@ -43,13 +43,13 @@ wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wie¿ania itp.
 
 %build
 %{__make} dep
-%{__make} all
+%{__make} all \
+	CFLAGS_DEFAULT="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" \
+	LDFLAGS_DEFAULT="%{!?debug:-s}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-install -d $RPM_BUILD_ROOT%{_sbindir}
-install -d $RPM_BUILD_ROOT%{_mandir}/man{5,8}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,8}}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT newinstall man-install
 install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
@@ -57,16 +57,14 @@ install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
 rm -f $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
 echo ".so SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
 
-gzip -9nf doc/* README \
-	README.FIRST CREDITS COPYING HISTORY TODO
+gzip -9nf doc/* README README.FIRST CREDITS COPYING HISTORY TODO
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc *.gz doc/*.gz
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/TextConfig
-%doc {README,README.FIRST,CREDITS,COPYING,HISTORY,TODO}.gz
-%doc doc/*.gz
 %attr(755,root,root) %{_sbindir}/*
 %attr(644,root,root) %{_mandir}/man*/*
