@@ -46,9 +46,7 @@ wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wie¿ania itp.
 
 %build
 %{__make} dep
-%{__make} all \
-	CFLAGS_DEFAULT="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
-	LDFLAGS_DEFAULT="%{!?debug:-s}"
+%{__make} all CFLAGS_DEFAULT="%{rpmcflags}" LDFLAGS_DEFAULT="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
