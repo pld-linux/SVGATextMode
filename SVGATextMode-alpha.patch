@@ -1,5 +1,6 @@
---- SVGATextMode-1.10/XFREE/Makefile.orig	Sun Sep  3 00:50:02 2000
-+++ SVGATextMode-1.10/XFREE/Makefile	Fri Aug 16 10:28:42 2002
+diff -ru SVGATextMode-1.10.orig/XFREE/Makefile SVGATextMode-1.10/XFREE/Makefile
+--- SVGATextMode-1.10.orig/XFREE/Makefile	2004-05-26 19:00:45.081665440 +0200
++++ SVGATextMode-1.10/XFREE/Makefile	2004-05-26 19:01:50.284753064 +0200
 @@ -22,11 +22,11 @@
            mach64/mach64_mem_access.o mach64/mach64.o \
            riva128_clock.o \
@@ -14,43 +15,33 @@
  
  
  all: $(XFREELIBS) $(OBJECTS) $(ASMOBJS)
---- SVGATextMode-1.10/asm/io.h.orig	Tue Apr 15 21:10:46 1997
-+++ SVGATextMode-1.10/asm/io.h	Fri Aug 16 10:52:22 2002
-@@ -1,6 +1,30 @@
- #ifndef _ASM_IO_H
- #define _ASM_IO_H
- 
-+#ifdef __alpha__
-+
-+#include <sys/io.h>
-+#ifndef inb_p
-+#  define	inb_p	inb
-+#endif
-+#ifndef inw_p
-+#  define	inw_p	inw
-+#endif
-+#ifndef inl_p
-+#  define	inl_p	inl
-+#endif
-+#ifndef outb_p
-+#  define	outb_p	outb
-+#endif
-+#ifndef outw_p
-+#  define	outw_p	outw
-+#endif
-+#ifndef outl_p
-+#  define	outl_p	outl
-+#endif
-+
-+#else /* __alpha__ */
-+
- /*
-  * This file contains the definitions for the x86 IO instructions
-  * inb/inw/inl/outb/outw/outl.
-@@ -72,4 +96,6 @@
- #define outb_p(v,p) outb(p,v);inb(0x80)
- #define inb_p(p) inb(p),inb(0x80)
- 
-+#endif /* __alpha__ */
-+
+diff -ru SVGATextMode-1.10.orig/vga_prg.h SVGATextMode-1.10/vga_prg.h
+--- SVGATextMode-1.10.orig/vga_prg.h	2004-05-26 18:55:31.629317440 +0200
++++ SVGATextMode-1.10/vga_prg.h	2004-05-26 19:01:50.284753064 +0200
+@@ -41,6 +41,26 @@
+ #  define iopl(x) (0)
+ #else
+ #  include <sys/io.h>
++#  ifdef __alpha__
++#    ifndef inb_p
++#      define  inb_p   inb
++#    endif
++#    ifndef inw_p
++#      define  inw_p   inw
++#    endif
++#    ifndef inl_p
++#      define  inl_p   inl
++#    endif
++#    ifndef outb_p
++#      define  outb_p  outb
++#    endif
++#    ifndef outw_p
++#      define  outw_p  outw
++#    endif
++#    ifndef outl_p
++#      define  outl_p  outl
++#    endif
++#  endif /* __alpha__ */
  #endif
+ 
+ #ifndef _SYS_IO_H
