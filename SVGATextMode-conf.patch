@@ -1,18 +1,16 @@
 diff -urN SVGATextMode-1.9-src.orig.orig/TextConfig SVGATextMode-1.9-src.orig/TextConfig
 --- SVGATextMode-1.9-src.orig.orig/TextConfig	Wed Jul 28 22:42:18 1999
 +++ SVGATextMode-1.9-src.orig/TextConfig	Wed Jul 28 22:44:55 1999
-@@ -448,13 +448,13 @@
- #
+@@ -449,12 +449,12 @@
  
  Option "LoadFont"
--FontProg "/usr/bin/setfont"
+ FontProg "/usr/bin/setfont"
 -#FontPath "/usr/lib/kbd/consolefonts"
 -FontSelect "Cyr_a8x16"   8x16 9x16 8x15 9x15 
 -FontSelect "Cyr_a8x14"   8x14 9x14 8x13 9x13
 -FontSelect "8x12alt.psf" 8x12 9x12 8x11 9x11
 -FontSelect "Cyr_a8x8"    8x8  9x8  8x7  9x7
 -FontSelect "Cyr_a8x32"   8x32 9x32 8x31 9x31
-+FontProg "/usr/bin/consolechars -f"
 +FontPath "/usr/share/consolefonts"
 +FontSelect "lat2u-16" 8x16 9x16 8x15 9x15
 +FontSelect "lat2-14" 8x14 9x14 8x13 9x13
