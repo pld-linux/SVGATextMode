@@ -1,0 +1,10 @@
+--- SVGATextMode-1.10/cfgfile.y.orig	Fri May 10 23:37:21 2002
++++ SVGATextMode-1.10/cfgfile.y	Fri May 10 23:38:07 2002
+@@ -24,6 +24,7 @@
+ 
+ /****************************************************************************/
+ /* C DECLARATIONS */
++#include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include "cfg_structs.h"
