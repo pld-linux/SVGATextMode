@@ -121,4 +121,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/* README README.FIRST CREDITS HISTORY TODO
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/TextConfig
 %attr(755,root,root) %{_sbindir}/*
-%attr(644,root,root) %{_mandir}/man*/*
+%{_mandir}/man*/*
