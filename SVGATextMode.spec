@@ -10,6 +10,7 @@ Release:	16
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
+# Source0-md5:	d94c6cd073295fc181d0865c039eb13e
 Patch0:		%{name}-conf.patch
 Patch1:		%{name}-make.patch
 Patch2:		%{name}-cache.patch
