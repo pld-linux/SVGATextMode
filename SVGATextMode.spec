@@ -2,7 +2,7 @@ Summary:	A utility for improving the appearance of terminals
 Summary(pl):	Narzêdzie do polepszania wygl±du terminali
 Name:		SVGATextMode
 Version:	1.10
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
@@ -55,8 +55,8 @@ install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
 install contrib/scripts/STM_reset $RPM_BUILD_ROOT%{_sbindir}
 
 rm -f $RPM_BUILD_ROOT%{_mandir}/man8/{stm,clockprobe}.8
-echo ".so man8/SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
-echo ".so man8/grabmode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/clockprobe.8
+echo ".so SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
+echo ".so grabmode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/clockprobe.8
 
 gzip -9nf doc/* README README.FIRST CREDITS HISTORY TODO
 
