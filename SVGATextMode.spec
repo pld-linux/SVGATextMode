@@ -109,6 +109,8 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man8/{stm,clockprobe}.8
 echo ".so SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
 echo ".so grabmode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/clockprobe.8
 
+ln -sf grabmode_pixmux.gz doc/grabmode_hi_truecolor
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
