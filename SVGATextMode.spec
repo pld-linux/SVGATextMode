@@ -10,6 +10,7 @@ Release:	17
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
+URL:		http://freshmeat.net/projects/svgatextmode/
 # Source0-md5:	d94c6cd073295fc181d0865c039eb13e
 Patch0:		%{name}-conf.patch
 Patch1:		%{name}-make.patch
@@ -28,7 +29,7 @@ BuildRequires:	util-linux
 Requires:	dialog
 Requires:	kbd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-ExclusiveArch:	%{ix86} alpha
+ExclusiveArch:	%{ix86} alpha amd64
 
 %description
 SVGATextMode is a utility for reprogramming (S)VGA hardware, which can
