@@ -10,7 +10,6 @@ Release:	17
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
-URL:		http://freshmeat.net/projects/svgatextmode/
 # Source0-md5:	d94c6cd073295fc181d0865c039eb13e
 Patch0:		%{name}-conf.patch
 Patch1:		%{name}-make.patch
@@ -23,13 +22,14 @@ Patch7:		%{name}-GeForce.patch
 Patch8:		%{name}-voodoo.patch
 Patch9:		%{name}-alpha.patch
 Patch10:	%{name}-gcc33.patch
+URL:		http://freshmeat.net/projects/svgatextmode/
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	util-linux
 Requires:	dialog
 Requires:	kbd
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86} alpha amd64
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 SVGATextMode is a utility for reprogramming (S)VGA hardware, which can
@@ -106,15 +106,21 @@ ln -sf ../../asm XFREE/include
 %patch10 -p1
 
 %build
-%{__make} dep CC="%{__cc}"
-%{__make} all CC="%{__cc}" ARCH="%{_target_cpu}" \
-CFLAGS_DEFAULT="%{rpmcflags}" LDFLAGS_DEFAULT="%{rpmldflags}"
+%{__make} dep \
+	CC="%{__cc}"
+%{__make} all \
+	CC="%{__cc}" \
+	ARCH="%{_target_cpu}" \
+	CFLAGS_DEFAULT="%{rpmcflags}" \
+	LDFLAGS_DEFAULT="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_sbindir},%{_mandir}/man{5,8}}
 
-%{__make} DESTDIR=$RPM_BUILD_ROOT newinstall man-install
+%{__make} newinstall man-install \
+	DESTDIR=$RPM_BUILD_ROOT
+
 install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
 install contrib/scripts/STM_reset $RPM_BUILD_ROOT%{_sbindir}
 
