@@ -1,7 +1,6 @@
-diff -ru SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/riva128_clock.c
---- SVGATextMode-1.10.orig/XFREE/riva128_clock.c	Tue Jul 18 04:47:15 2000
-+++ SVGATextMode-1.10/XFREE/riva128_clock.c	Tue Oct 30 03:39:11 2001
-@@ -83,6 +83,13 @@
+--- SVGATextMode-1.10/XFREE/riva128_clock.c.orig	Tue Mar 18 12:07:39 2003
++++ SVGATextMode-1.10/XFREE/riva128_clock.c	Tue Mar 18 12:24:24 2003
+@@ -83,6 +83,33 @@
  #define PCI_DEVICE_ID_NVIDIA_VTNT2     0x002C
  #define PCI_DEVICE_ID_NVIDIA_UVTNT2    0x002D
  #define PCI_DEVICE_ID_NVIDIA_ITNT2     0x00A0
@@ -12,10 +11,30 @@ diff -ru SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/ri
 +#define PCI_DEVICE_ID_NVIDIA_GEFORCE2_GTS       0x0150
 +#define PCI_DEVICE_ID_NVIDIA_GEFORCE2_GTS2      0x0151
 +#define PCI_DEVICE_ID_NVIDIA_GEFORCE2_ULTRA     0x0152
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE3		0x0200
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE3_TI200	0x0201
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE3_TI500	0x0202
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX460	0x0170
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX440	0x0171
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX420	0x0172
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX440SE	0x0173
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_440GO	0x0174
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_420GO	0x0175
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_420GO32	0x0176
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_460GO	0x0177
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_460GO64	0x0179
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_410GO16	0x017D
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX440_AGP8x	0x0181
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX440SE_AGP8x	0x0182
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX420_AGP8x	0x0183
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_TI4800	0x0280
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_TI4200_AGP8x	0x0281
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_TI4800SE	0x0282
++#define PCI_DEVICE_ID_NVIDIA_GEFORCE4_4200GO	0x0286
  
  vgaPCIInformation *vgaPCIInfo;
  
-@@ -92,14 +99,15 @@
+@@ -92,14 +119,15 @@
  #define PRAMDAC_PLL_COEFF  0x00000508
  #define PRAMDAC_PLL_COEFF_SELECT   0x0000050C
  
@@ -33,7 +52,7 @@ diff -ru SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/ri
  #define M_MIN 7
  #define M_MAX 13
  
-@@ -176,7 +184,7 @@
+@@ -176,7 +204,7 @@
  // Set the clock to the given speed (in KHz)
  Bool RIVA128ClockSelect( int clockspeed )
  {
@@ -42,7 +61,7 @@ diff -ru SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/ri
  
    int out;
    int m, n, p, value;
-@@ -205,7 +213,14 @@
+@@ -205,7 +233,34 @@
                                 pcr->_device == PCI_DEVICE_ID_NVIDIA_UTNT2 ||
                                 pcr->_device == PCI_DEVICE_ID_NVIDIA_VTNT2 ||
                                 pcr->_device == PCI_DEVICE_ID_NVIDIA_UVTNT2 ||
@@ -54,15 +73,34 @@ diff -ru SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/ri
 +                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_MX200 ||
 +                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_GTS ||
 +                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_GTS2 ||
-+                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_ULTRA)
++                               pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE2_ULTRA ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE3 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE3_TI200 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE3_TI500 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX460 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX440 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX420 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX440SE ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_440GO ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_420GO ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_420GO32 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_460GO ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_460GO64 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_410GO16 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX440_AGP8x ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX440SE_AGP8x ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_MX420_AGP8x ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_TI4800 ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_TI4200_AGP8x ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_TI4800SE ||
++			       pcr->_device == PCI_DEVICE_ID_NVIDIA_GEFORCE4_4200GO)
                         {
                                 is_nv3 = 0;
                                 pll_coeff = 0x00010700;
-@@ -248,6 +263,24 @@
-     PERROR(( "Error mmap'ing /dev/mem" ));
+@@ -249,6 +304,24 @@
      return FALSE;
    }
-+
+     
 +  ptr2 = (int*)mmap(0, 0x1000,PROT_READ|PROT_WRITE,MAP_SHARED, fd, (off_t)(pcr->_base0) + PEXTDEV_BASE);
 +
 +  if( ptr2 == (int*)-1 )
@@ -80,6 +118,7 @@ diff -ru SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/ri
 +    PLL_INPUT_FREQ = (ptr2[0x00000000/4]&0x40) ? 14318 : 13500;
 +  }
 +  munmap(ptr2, 0x1000);
-     
++    
    close( fd );
  #else
+   ptr=(int*) malloc(0x4000);
