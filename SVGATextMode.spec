@@ -7,12 +7,13 @@ Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
-Source1:	%{name}.init
 Patch0:		%{name}-conf.patch
 Patch1:		%{name}-make.patch
 Patch2:		%{name}-cache.patch
+Patch3:		%{name}-stmmenu.patch
 BuildRequires:	bison
-Prereq:		/sbin/chkconfig
+Requires:	console-tools
+Requires:	dialog
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86} alpha
 
@@ -38,6 +39,7 @@ wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wie¿ania itp.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__make} dep
@@ -46,15 +48,13 @@ wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wie¿ania itp.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 install -d $RPM_BUILD_ROOT%{_sbindir}
 install -d $RPM_BUILD_ROOT%{_mandir}/man{5,8}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT newinstall man-install
 install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
 
-install	%{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-
+rm -f $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
 echo ".so SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
 
 gzip -9nf doc/* README \
@@ -63,14 +63,6 @@ gzip -9nf doc/* README \
 %clean 
 rm -rf $RPM_BUILD_ROOT
 
-%post
-/sbin/chkconfig --add %{name} 2>/dev/null
-
-%preun
-if [ "$1" = "0" ]; then
-	/sbin/chkconfig --del %{name} 2>/dev/null
-fi
-
 %files
 %defattr(644,root,root,755)
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/TextConfig
@@ -78,4 +70,3 @@ fi
 %doc doc/*.gz
 %attr(755,root,root) %{_sbindir}/*
 %attr(644,root,root) %{_mandir}/man*/*
-%attr(754,root,root) /etc/rc.d/init.d/%{name}
