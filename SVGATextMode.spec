@@ -12,8 +12,10 @@ Patch1:		%{name}-make.patch
 Patch2:		%{name}-cache.patch
 Patch3:		%{name}-stmmenu.patch
 Patch4:		%{name}-set80.patch
+BuildRequires:	flex
 BuildRequires:	bison
 Requires:	console-tools
+Requires:	console-data
 Requires:	dialog
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86} alpha
@@ -54,9 +56,11 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_sbindir},%{_mandir}/man{5,8}}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT newinstall man-install
 install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
+install contrib/scripts/STM_reset $RPM_BUILD_ROOT%{_sbindir}
 
-rm -f $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
+rm -f $RPM_BUILD_ROOT%{_mandir}/man8/{stm,clockprobe}.8
 echo ".so SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
+echo ".so grabmode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/clockprobe.8
 
 gzip -9nf doc/* README README.FIRST CREDITS HISTORY TODO
 

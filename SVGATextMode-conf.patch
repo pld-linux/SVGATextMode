@@ -14,11 +14,11 @@ diff -urN SVGATextMode-1.9-src.orig.orig/TextConfig SVGATextMode-1.9-src.orig/Te
 -FontSelect "Cyr_a8x32"   8x32 9x32 8x31 9x31
 +FontProg "/usr/bin/consolechars -f"
 +FontPath "/usr/share/consolefonts"
-+FontSelect "iso2graf-16" 8x16 9x16 8x15 9x15
-+FontSelect "iso2graf-16" 8x14 9x14 8x13 9x13
-+FontSelect "iso2graf-16" 8x12 9x12 8x11 9x11
-+FontSelect "iso2graf-16" 8x10 9x10 8x9  9x9
-+FontSelect "iso2graf-16" 8x8  9x8  8x7  9x7
++FontSelect "lat2u-16" 8x16 9x16 8x15 9x15
++FontSelect "lat2-14" 8x14 9x14 8x13 9x13
++FontSelect "lat2-12" 8x12 9x12 8x11 9x11
++FontSelect "lat2-10" 8x10 9x10 8x9  9x9
++FontSelect "lat2-08" 8x8  9x8  8x7  9x7
  
  #
  # using the following FontProg line will avoid losing high-ascii characters
