@@ -1,0 +1,11 @@
+--- SVGATextMode-1.10/Makefile	Thu Apr 11 07:38:22 2002
++++ SVGATextMode-1.10.new/Makefile	Thu Apr 11 07:46:33 2002
+@@ -402,7 +402,7 @@
+ depend dep: .depend
+ 
+ .depend::
+-	gcc -MM *.c >.depend
++	$(CC) -MM *.c >.depend
+ 	$(MAKE) -C XFREE depend
+ 
+ 
