@@ -44,7 +44,7 @@ wiêksze fonty, wy¿sze czêstotliwo¶ci od¶wie¿ania itp.
 %build
 %{__make} dep
 %{__make} all \
-	CFLAGS_DEFAULT="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" \
+	CFLAGS_DEFAULT="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}" \
 	LDFLAGS_DEFAULT="%{!?debug:-s}"
 
 %install
