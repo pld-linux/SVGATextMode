@@ -1,0 +1,17 @@
+--- set80.c	Thu Oct  8 22:28:50 1998
++++ set80.c-chmou	Mon Dec 20 20:38:18 1999
+@@ -104,8 +104,14 @@
+ 
+ int main (int argc, char* argv[])
+ {
++  char * retval;
+   int c;
+   bool restore_all_regs=FALSE;
++  retval = getenv("DISPLAY");
++
++  if (retval != NULL)
++  	  PERROR(("Don't run set80 under X-Windows\n"));
++
+ 
+   CommandName = argv[0];
+ 
