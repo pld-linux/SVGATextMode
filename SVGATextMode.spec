@@ -28,7 +28,7 @@ BuildRequires:	flex
 BuildRequires:	util-linux
 Requires:	dialog
 Requires:	kbd
-ExclusiveArch:	%{ix86} alpha amd64
+ExclusiveArch:	%{ix86} %{x8664} alpha
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
