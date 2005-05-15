@@ -1,0 +1,129 @@
+diff -Nru SVGATextMode-1.10.orig/cfgfile.y SVGATextMode-1.10/cfgfile.y
+--- SVGATextMode-1.10.orig/cfgfile.y	2005-05-12 19:41:58.461501000 +0200
++++ SVGATextMode-1.10/cfgfile.y	2005-05-15 17:53:24.099339552 +0200
+@@ -32,6 +32,7 @@
+ #include "validate.h"
+ #include "messages.h"
+ #include "misc.h"
++#include <sys/io.h>
+ #include <sys/stat.h>
+ 
+ /* if VGA_CAN_DO_64KB is defined, 32k chars per screen are allowed */
+diff -Nru SVGATextMode-1.10.orig/cfglex.l SVGATextMode-1.10/cfglex.l
+--- SVGATextMode-1.10.orig/cfglex.l	1997-09-08 20:07:20.000000000 +0200
++++ SVGATextMode-1.10/cfglex.l	2005-05-15 17:52:21.312884544 +0200
+@@ -29,6 +29,7 @@
+ #include "y.tab.h"
+ #include "messages.h"
+ #include "misc.h"
++#include "vga_prg.h"
+ 
+ #define unquote_yytext  ( *(yytext+(yyleng-1))='\0' , (yytext+1) )   /* works, but doesn't allow spaces */
+ #define unquote1_yytext  ( *(yytext+(yyleng-1))='\0' , (yytext) )   /* works, but doesn't allow spaces */
+diff -Nru SVGATextMode-1.10.orig/misc.h SVGATextMode-1.10/misc.h
+--- SVGATextMode-1.10.orig/misc.h	1998-09-05 16:18:44.000000000 +0200
++++ SVGATextMode-1.10/misc.h	2005-05-12 20:09:08.707666464 +0200
+@@ -24,6 +24,7 @@
+ #ifndef _MISC_H
+ #define _MISC_H
+ 
++#undef ulong
+ #include <sys/types.h>
+ 
+ /*
+diff -Nru SVGATextMode-1.10.orig/vga_prg.h SVGATextMode-1.10/vga_prg.h
+--- SVGATextMode-1.10.orig/vga_prg.h	2000-09-03 00:03:07.000000000 +0200
++++ SVGATextMode-1.10/vga_prg.h	2005-05-15 17:50:08.282108296 +0200
+@@ -41,13 +41,13 @@
+ #  define iopl(x) (0)
+ #else
+ extern int iopl(int);
+-#  include <asm/io.h>
++#  include <sys/io.h>
+ #  ifdef __ALPHA_IO_H
+-#    define _ASM_IO_H
++#    define _SYS_IO_H
+ #  endif
+ #endif
+ 
+-#ifndef _ASM_IO_H
++#ifndef _SYS_IO_H
+ #  ifdef DJGPP
+ #    include <pc.h>
+ #    define outb(data,port) outportb(port,data)
+diff -Nru SVGATextMode-1.10.orig/XFREE/common_hw/xf86_PCI.c SVGATextMode-1.10/XFREE/common_hw/xf86_PCI.c
+--- SVGATextMode-1.10.orig/XFREE/common_hw/xf86_PCI.c	2000-09-03 01:37:09.000000000 +0200
++++ SVGATextMode-1.10/XFREE/common_hw/xf86_PCI.c	2005-05-12 20:11:14.873486344 +0200
+@@ -37,6 +37,7 @@
+ #define xf86AddIOPorts(x,y,z)
+ #define xf86EnableIOPorts(x)
+ #define xf86DisableIOPorts(x)
++#undef ulong
+ #include "stdlib.h"
+ #define xalloc malloc
+ #define xfree free
+diff -Nru SVGATextMode-1.10.orig/XFREE/mach64/mach64.c SVGATextMode-1.10/XFREE/mach64/mach64.c
+--- SVGATextMode-1.10.orig/XFREE/mach64/mach64.c	1998-10-08 21:48:24.000000000 +0200
++++ SVGATextMode-1.10/XFREE/mach64/mach64.c	2005-05-12 20:14:25.823457536 +0200
+@@ -23,6 +23,7 @@
+  ***/
+ 
+ #include <stdio.h>
++#undef ulong
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
+diff -Nru SVGATextMode-1.10.orig/XFREE/mach64/mach64_mem_access.c SVGATextMode-1.10/XFREE/mach64/mach64_mem_access.c
+--- SVGATextMode-1.10.orig/XFREE/mach64/mach64_mem_access.c	1997-04-15 21:22:50.000000000 +0200
++++ SVGATextMode-1.10/XFREE/mach64/mach64_mem_access.c	2005-05-12 20:13:53.235411672 +0200
+@@ -30,6 +30,7 @@
+ /************************************************************************/
+ 
+ #include <unistd.h>
++#undef ulong
+ #include <fcntl.h>
+ #include <errno.h>
+ #include "messages.h"
+diff -Nru SVGATextMode-1.10.orig/XFREE/riva128_clock.c SVGATextMode-1.10/XFREE/riva128_clock.c
+--- SVGATextMode-1.10.orig/XFREE/riva128_clock.c	2005-05-12 19:41:58.468500000 +0200
++++ SVGATextMode-1.10/XFREE/riva128_clock.c	2005-05-12 20:15:16.138808440 +0200
+@@ -61,6 +61,7 @@
+ #include <sys/mman.h>
+ #include <stdio.h>
+ #include <math.h>
++#undef ulong
+ #include <stdlib.h>
+ #include <fcntl.h>
+ #include "messages.h"
+diff -Nru SVGATextMode-1.10.orig/XFREE/vgaPCI.c SVGATextMode-1.10/XFREE/vgaPCI.c
+--- SVGATextMode-1.10.orig/XFREE/vgaPCI.c	2000-09-03 00:08:48.000000000 +0200
++++ SVGATextMode-1.10/XFREE/vgaPCI.c	2005-05-12 20:12:41.386334392 +0200
+@@ -8,7 +8,7 @@
+  *
+  */
+ /* $XConsortium: vgaPCI.c /main/10 1996/10/25 10:34:22 kaleb $ */
+-
++#undef ulong
+ #include <stdlib.h>
+ #define xalloc malloc
+ #define xfree free
+diff -Nru SVGATextMode-1.10.orig/XFREE/voodoo_clock.c SVGATextMode-1.10/XFREE/voodoo_clock.c
+--- SVGATextMode-1.10.orig/XFREE/voodoo_clock.c	2005-05-12 19:41:58.476499000 +0200
++++ SVGATextMode-1.10/XFREE/voodoo_clock.c	2005-05-15 16:48:08.023673544 +0200
+@@ -5,6 +5,7 @@
+                                  -- Jakub Bogusz <qboosh@pld.org.pl> */
+ 
+ #define STM_XFREE
++#undef ulong
+ #include <stdlib.h>
+ #include "messages.h"
+ #include "compiler.h"
+@@ -16,7 +17,7 @@
+ #define PCI_DEVICE_ID_VOODOO3	0x0005
+ #define PCI_DEVICE_ID_VOODOO4	0x0009
+ 
+-static vgaPCIInformation *vgaPCIInfo;
++vgaPCIInformation *vgaPCIInfo;
+ 
+ /* function taken from svgalib (banshee.c) */
+ #define REFFREQ 14318.18
