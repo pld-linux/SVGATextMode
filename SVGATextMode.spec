@@ -22,6 +22,7 @@ Patch7:		%{name}-GeForce.patch
 Patch8:		%{name}-voodoo.patch
 Patch9:		%{name}-alpha.patch
 Patch10:	%{name}-gcc33.patch
+Patch11:	%{name}-gcc4.patch
 URL:		http://freshmeat.net/projects/svgatextmode/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -104,6 +105,7 @@ SVGATextMode - це утил╕та для перепрограмування апаратури (S)VGA з
 ln -sf ../../asm XFREE/include
 %endif
 %patch10 -p1
+%patch11 -p1
 
 %build
 %{__make} dep \
