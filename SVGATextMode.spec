@@ -138,6 +138,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc doc/* README README.FIRST CREDITS HISTORY TODO
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/TextConfig
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/TextConfig
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man*/*
