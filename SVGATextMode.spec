@@ -1,9 +1,9 @@
 Summary:	A utility for improving the appearance of terminals
-Summary(es):	Utilitario para configuraciСn avanzada de los modos de vМdeo da consola
-Summary(pl):	NarzЙdzie do polepszania wygl╠du terminali
-Summary(pt_BR):	UtilitАrio para configuraГЦo avanГada dos modos de vМdeo da console
-Summary(ru):	Утилита для улучшения внешнего вида текстовых консолей
-Summary(uk):	Утил╕та для покращення зовн╕шнього вигляду текстових консолей
+Summary(es.UTF-8):   Utilitario para configuraciцЁn avanzada de los modos de vц╜deo da consola
+Summary(pl.UTF-8):   Narzд≥dzie do polepszania wyglд┘du terminali
+Summary(pt_BR.UTF-8):   Utilitц║rio para configuraц╖цёo avanц╖ada dos modos de vц╜deo da console
+Summary(ru.UTF-8):   пёя┌п╦п╩п╦я┌п╟ п╢п╩я▐ я┐п╩я┐я┤я┬п╣п╫п╦я▐ п╡п╫п╣я┬п╫п╣пЁп╬ п╡п╦п╢п╟ я┌п╣п╨я│я┌п╬п╡я▀я┘ п╨п╬п╫я│п╬п╩п╣п╧
+Summary(uk.UTF-8):   пёя┌п╦п╩я√я┌п╟ п╢п╩я▐ п©п╬п╨я─п╟я┴п╣п╫п╫я▐ п╥п╬п╡п╫я√я┬п╫я▄п╬пЁп╬ п╡п╦пЁп╩я▐п╢я┐ я┌п╣п╨я│я┌п╬п╡п╦я┘ п╨п╬п╫я│п╬п╩п╣п╧
 Name:		SVGATextMode
 Version:	1.10
 Release:	18
@@ -40,52 +40,52 @@ higher resolution, larger fonts, higher display refresh rates, etc.
 Although SVGATextMode can be used to program any text mode size, your
 results will depend on your VGA card.
 
-%description -l es
+%description -l es.UTF-8
 SVGATextMode permite que el modo de la pantalla de la consola del
-Linux sea controlada detalladamente. Esto permite que mАs caracteres
-sean mostrados en la pantalla, mАs textos estables, menos caracteres
+Linux sea controlada detalladamente. Esto permite que mц║s caracteres
+sean mostrados en la pantalla, mц║s textos estables, menos caracteres
 en la pantalla, menos textos estables, etc. En un hardware con
-proyecto malo podrАs acabar con un monitor derretido. Son necesarias
+proyecto malo podrц║s acabar con un monitor derretido. Son necesarias
 fuentes extras para que funcione correctamente, pero mismo sin ellas
-se pueden obtener efectos Зtiles.
+se pueden obtener efectos ц╨tiles.
 
-%description -l pl
-SVGATextMode jest narzЙdziem sЁu©╠cym do konfiguracji sprzЙtu (S)VGA,
-ktСre pozwala na polepszenie wygl╠du terminali. Wykorzystuje plik
-konfiguracyjny (Xconfig lub XF86Config) aby ustawiaФ wy©sze
-rozdzielczo╤ci, wiЙksze fonty, wy©sze czЙstotliwo╤ci od╤wie©ania itp.
+%description -l pl.UTF-8
+SVGATextMode jest narzд≥dziem sе┌uе╪д┘cym do konfiguracji sprzд≥tu (S)VGA,
+ktцЁre pozwala na polepszenie wyglд┘du terminali. Wykorzystuje plik
+konfiguracyjny (Xconfig lub XF86Config) aby ustawiaд┤ wyе╪sze
+rozdzielczoе⌡ci, wiд≥ksze fonty, wyе╪sze czд≥stotliwoе⌡ci odе⌡wieе╪ania itp.
 
-%description -l pt_BR
+%description -l pt_BR.UTF-8
 O SVGATextMode permite que o modo da tela do console do Linux seja
 controlado detalhadamente. Isto permite que mais caracteres sejam
-mostrados na tela, mais textos estАveis, menos caracteres na tela,
-menos textos estАveis, etc. Em hardware com projeto ruim voce poderА
+mostrados na tela, mais textos estц║veis, menos caracteres na tela,
+menos textos estц║veis, etc. Em hardware com projeto ruim voce poderц║
 obter um monitor derretido.
 
-Fontes extras sЦo necessАrias para que o mesmo funcione corretamente,
-mas mesmo sem elas efeitos Зteis podem ser obtidos.
+Fontes extras sцёo necessц║rias para que o mesmo funcione corretamente,
+mas mesmo sem elas efeitos ц╨teis podem ser obtidos.
 
-%description -l ru
-SVGATextMode - это утилита для перепрограмирования аппаратуры (S)VGA с
-целью улучшения внешнего вида текстовых консолей. SVGATextMode
-использует конфигурационный файл (по умолчанию /etc/TextConfig) с
-синтаксисом, похожим на конфигурационный файл X Window System (Xconfig
-или XF86Config) для настройки текстовых режимов с более высоким
-разрешением, большими размерами шрифтов, большей частотой обновления
-экрана и т.п. Теоретически, SVGATextMode может быть использована для
-программирования любого размера в текстовом режиме, но практически
-результат зависит от используемой видеокарты.
+%description -l ru.UTF-8
+SVGATextMode - я█я┌п╬ я┐я┌п╦п╩п╦я┌п╟ п╢п╩я▐ п©п╣я─п╣п©я─п╬пЁя─п╟п╪п╦я─п╬п╡п╟п╫п╦я▐ п╟п©п©п╟я─п╟я┌я┐я─я▀ (S)VGA я│
+я├п╣п╩я▄я▌ я┐п╩я┐я┤я┬п╣п╫п╦я▐ п╡п╫п╣я┬п╫п╣пЁп╬ п╡п╦п╢п╟ я┌п╣п╨я│я┌п╬п╡я▀я┘ п╨п╬п╫я│п╬п╩п╣п╧. SVGATextMode
+п╦я│п©п╬п╩я▄п╥я┐п╣я┌ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫я▀п╧ я└п╟п╧п╩ (п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ /etc/TextConfig) я│
+я│п╦п╫я┌п╟п╨я│п╦я│п╬п╪, п©п╬я┘п╬п╤п╦п╪ п╫п╟ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫я▀п╧ я└п╟п╧п╩ X Window System (Xconfig
+п╦п╩п╦ XF86Config) п╢п╩я▐ п╫п╟я│я┌я─п╬п╧п╨п╦ я┌п╣п╨я│я┌п╬п╡я▀я┘ я─п╣п╤п╦п╪п╬п╡ я│ п╠п╬п╩п╣п╣ п╡я▀я│п╬п╨п╦п╪
+я─п╟п╥я─п╣я┬п╣п╫п╦п╣п╪, п╠п╬п╩я▄я┬п╦п╪п╦ я─п╟п╥п╪п╣я─п╟п╪п╦ я┬я─п╦я└я┌п╬п╡, п╠п╬п╩я▄я┬п╣п╧ я┤п╟я│я┌п╬я┌п╬п╧ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐
+я█п╨я─п╟п╫п╟ п╦ я┌.п©. п╒п╣п╬я─п╣я┌п╦я┤п╣я│п╨п╦, SVGATextMode п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╟ п╢п╩я▐
+п©я─п╬пЁя─п╟п╪п╪п╦я─п╬п╡п╟п╫п╦я▐ п╩я▌п╠п╬пЁп╬ я─п╟п╥п╪п╣я─п╟ п╡ я┌п╣п╨я│я┌п╬п╡п╬п╪ я─п╣п╤п╦п╪п╣, п╫п╬ п©я─п╟п╨я┌п╦я┤п╣я│п╨п╦
+я─п╣п╥я┐п╩я▄я┌п╟я┌ п╥п╟п╡п╦я│п╦я┌ п╬я┌ п╦я│п©п╬п╩я▄п╥я┐п╣п╪п╬п╧ п╡п╦п╢п╣п╬п╨п╟я─я┌я▀.
 
-%description -l uk
-SVGATextMode - це утил╕та для перепрограмування апаратури (S)VGA з
-метою покращення зовн╕шнього вигляду текстових консолей. SVGATextMode
-використову╓ конф╕гурац╕йний файл (стандартно /etc/TextConfig) з
-синтаксисом, схожим на конф╕гурац╕йний файл X Window System (Xconfig
-або XF86Config) для налагодження текстових режим╕в з б╕льшою
-розд╕льною здатн╕стю, б╕льшими розм╕рами шрифт╕в, б╕льшою частотою
-поновлення екрану ╕ т.╕. Теоретично, SVGATextMode може бути
-використана для програмування будь-якого розм╕ру у текстовому режим╕,
-але практично результат залежить в╕д використано╖ в╕деокарти.
+%description -l uk.UTF-8
+SVGATextMode - я├п╣ я┐я┌п╦п╩я√я┌п╟ п╢п╩я▐ п©п╣я─п╣п©я─п╬пЁя─п╟п╪я┐п╡п╟п╫п╫я▐ п╟п©п╟я─п╟я┌я┐я─п╦ (S)VGA п╥
+п╪п╣я┌п╬я▌ п©п╬п╨я─п╟я┴п╣п╫п╫я▐ п╥п╬п╡п╫я√я┬п╫я▄п╬пЁп╬ п╡п╦пЁп╩я▐п╢я┐ я┌п╣п╨я│я┌п╬п╡п╦я┘ п╨п╬п╫я│п╬п╩п╣п╧. SVGATextMode
+п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■ п╨п╬п╫я└я√пЁя┐я─п╟я├я√п╧п╫п╦п╧ я└п╟п╧п╩ (я│я┌п╟п╫п╢п╟я─я┌п╫п╬ /etc/TextConfig) п╥
+я│п╦п╫я┌п╟п╨я│п╦я│п╬п╪, я│я┘п╬п╤п╦п╪ п╫п╟ п╨п╬п╫я└я√пЁя┐я─п╟я├я√п╧п╫п╦п╧ я└п╟п╧п╩ X Window System (Xconfig
+п╟п╠п╬ XF86Config) п╢п╩я▐ п╫п╟п╩п╟пЁп╬п╢п╤п╣п╫п╫я▐ я┌п╣п╨я│я┌п╬п╡п╦я┘ я─п╣п╤п╦п╪я√п╡ п╥ п╠я√п╩я▄я┬п╬я▌
+я─п╬п╥п╢я√п╩я▄п╫п╬я▌ п╥п╢п╟я┌п╫я√я│я┌я▌, п╠я√п╩я▄я┬п╦п╪п╦ я─п╬п╥п╪я√я─п╟п╪п╦ я┬я─п╦я└я┌я√п╡, п╠я√п╩я▄я┬п╬я▌ я┤п╟я│я┌п╬я┌п╬я▌
+п©п╬п╫п╬п╡п╩п╣п╫п╫я▐ п╣п╨я─п╟п╫я┐ я√ я┌.я√. п╒п╣п╬я─п╣я┌п╦я┤п╫п╬, SVGATextMode п╪п╬п╤п╣ п╠я┐я┌п╦
+п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╟ п╢п╩я▐ п©я─п╬пЁя─п╟п╪я┐п╡п╟п╫п╫я▐ п╠я┐п╢я▄-я▐п╨п╬пЁп╬ я─п╬п╥п╪я√я─я┐ я┐ я┌п╣п╨я│я┌п╬п╡п╬п╪я┐ я─п╣п╤п╦п╪я√,
+п╟п╩п╣ п©я─п╟п╨я┌п╦я┤п╫п╬ я─п╣п╥я┐п╩я▄я┌п╟я┌ п╥п╟п╩п╣п╤п╦я┌я▄ п╡я√п╢ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╬я≈ п╡я√п╢п╣п╬п╨п╟я─я┌п╦.
 
 %prep
 %setup -q
