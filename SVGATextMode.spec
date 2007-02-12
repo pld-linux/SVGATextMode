@@ -1,9 +1,9 @@
 Summary:	A utility for improving the appearance of terminals
-Summary(es.UTF-8):   Utilitario para configuración avanzada de los modos de vídeo da consola
-Summary(pl.UTF-8):   Narzędzie do polepszania wyglądu terminali
-Summary(pt_BR.UTF-8):   Utilitário para configuração avançada dos modos de vídeo da console
-Summary(ru.UTF-8):   Утилита для улучшения внешнего вида текстовых консолей
-Summary(uk.UTF-8):   Утиліта для покращення зовнішнього вигляду текстових консолей
+Summary(es.UTF-8):	Utilitario para configuración avanzada de los modos de vídeo da consola
+Summary(pl.UTF-8):	Narzędzie do polepszania wyglądu terminali
+Summary(pt_BR.UTF-8):	Utilitário para configuração avançada dos modos de vídeo da console
+Summary(ru.UTF-8):	Утилита для улучшения внешнего вида текстовых консолей
+Summary(uk.UTF-8):	Утиліта для покращення зовнішнього вигляду текстових консолей
 Name:		SVGATextMode
 Version:	1.10
 Release:	18
