@@ -6,7 +6,7 @@ Summary(ru.UTF-8):	Утилита для улучшения внешнего в�
 Summary(uk.UTF-8):	Утиліта для покращення зовнішнього вигляду текстових консолей
 Name:		SVGATextMode
 Version:	1.10
-Release:	18
+Release:	19
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
@@ -23,6 +23,7 @@ Patch8:		%{name}-voodoo.patch
 Patch9:		%{name}-alpha.patch
 Patch10:	%{name}-gcc33.patch
 Patch11:	%{name}-gcc4.patch
+Patch12:	%{name}-page.patch
 URL:		http://freshmeat.net/projects/svgatextmode/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -106,6 +107,7 @@ ln -sf ../../asm XFREE/include
 %endif
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 %{__make} dep \

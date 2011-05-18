@@ -1,0 +1,11 @@
+--- SVGATextMode-1.10/ttyresize.c.old	2011-05-18 17:12:39.000000000 +0200
++++ SVGATextMode-1.10/ttyresize.c	2011-05-18 17:13:03.000000000 +0200
+@@ -42,7 +42,7 @@
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <asm/page.h>	/* for PAGE_SIZE */
++#include <asm-generic/page.h>	/* for PAGE_SIZE */
+ #include <linux/vt.h>   /* for VT_RESIZE */
+ #include <sys/ioctl.h>
+ #include <sys/wait.h>
