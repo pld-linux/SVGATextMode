@@ -1,0 +1,11 @@
+--- SVGATextMode-1.10/grabmode.c.old	2013-03-14 15:45:57.126016309 +0100
++++ SVGATextMode-1.10/grabmode.c	2013-03-14 15:46:19.759699662 +0100
+@@ -272,7 +272,7 @@ int main (int argc, char* argv[])
+        if ((1<<i)==MSG_CLOCK_MEASUREMENTS)
+          fprintf(stderr, mode_messages[i].msg_txt,m.valid_measurements);
+        else
+-         fprintf(stderr, mode_messages[i].msg_txt);
++         fputs(mode_messages[i].msg_txt, stderr);
+        fputc('\n', stderr);
+      }
+    }
