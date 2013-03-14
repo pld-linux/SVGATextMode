@@ -24,6 +24,7 @@ Patch9:		%{name}-alpha.patch
 Patch10:	%{name}-gcc33.patch
 Patch11:	%{name}-gcc4.patch
 Patch12:	%{name}-page.patch
+Patch13:	%{name}-format_security.patch
 URL:		http://freshmeat.net/projects/svgatextmode/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -95,7 +96,7 @@ SVGATextMode - це утиліта для перепрограмування а�
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#%patch3 -p1
 %patch4 -p0
 %patch5 -p1
 %patch6 -p1
@@ -108,6 +109,7 @@ ln -sf ../../asm XFREE/include
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 %{__make} dep \
