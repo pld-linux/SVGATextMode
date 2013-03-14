@@ -7,7 +7,7 @@ Summary(uk.UTF-8):	Утиліта для покращення зовнішньо
 Name:		SVGATextMode
 Version:	1.10
 Release:	19
-License:	GPL
+License:	GPL v2+
 Group:		Applications/System
 Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/console/%{name}-%{version}-src.tar.gz
 # Source0-md5:	d94c6cd073295fc181d0865c039eb13e
@@ -96,7 +96,7 @@ SVGATextMode - це утиліта для перепрограмування а�
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 %patch4 -p0
 %patch5 -p1
 %patch6 -p1
@@ -130,7 +130,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_sbindir},%{_mandir}/man{5,8}}
 install STMmenu $RPM_BUILD_ROOT%{_sbindir}/stm-menu
 install contrib/scripts/STM_reset $RPM_BUILD_ROOT%{_sbindir}
 
-rm -f $RPM_BUILD_ROOT%{_mandir}/man8/{stm,clockprobe}.8
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man8/{stm,clockprobe}.8
 echo ".so SVGATextMode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/stm.8
 echo ".so grabmode.8" > $RPM_BUILD_ROOT%{_mandir}/man8/clockprobe.8
 
@@ -143,5 +143,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/* README README.FIRST CREDITS HISTORY TODO
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/TextConfig
-%attr(755,root,root) %{_sbindir}/*
-%{_mandir}/man*/*
+%attr(755,root,root) %{_sbindir}/ClockProg
+%attr(755,root,root) %{_sbindir}/STM_reset
+%attr(755,root,root) %{_sbindir}/SVGATextMode
+%attr(755,root,root) %{_sbindir}/clockprobe
+%attr(755,root,root) %{_sbindir}/getVGAreg
+%attr(755,root,root) %{_sbindir}/getpalette
+%attr(755,root,root) %{_sbindir}/grabmode
+%attr(755,root,root) %{_sbindir}/set80
+%attr(755,root,root) %{_sbindir}/setVGAreg
+%attr(755,root,root) %{_sbindir}/setpalette
+%attr(755,root,root) %{_sbindir}/stm
+%attr(755,root,root) %{_sbindir}/stm-menu
+%{_mandir}/man5/TextConfig.5*
+%{_mandir}/man8/SVGATextMode.8*
+%{_mandir}/man8/clockprobe.8*
+%{_mandir}/man8/grabmode.8*
+%{_mandir}/man8/stm.8*
